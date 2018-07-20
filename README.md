@@ -1,5 +1,8 @@
 # DesignPatternStudy
 Design Pattern Study
 
-MVVM
+Architectural Pattern
+  - MVVM
+
+Design Pattern
   - Singleton
