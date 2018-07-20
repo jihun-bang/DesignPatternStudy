@@ -14,12 +14,15 @@ public class MainViewModel implements BaseViewModel {
     public final ObservableField<String> serverStateBtn = new ObservableField<>();
 
     public MainViewModel() {
-        model = new SharedInstance();
+        //model = new SharedInstance();
+        //싱글톤 적용
+        model = SharedInstance.getInstance();
     }
 
     @Override
     public void onCreate() {
-        serverStateBtn.set("Servo On");
+        serverStateBtn.set(model.getServerStateBtn());
+        serverState.set(model.getServerState());
     }
 
     @Override
@@ -39,17 +42,17 @@ public class MainViewModel implements BaseViewModel {
 
     // 이벤트 리스너 함수
     // 새로운 데이터를 전달 받아 갱신 및 알람
-    // View UI 갱신
+    // View UI 갱신 (MainActivity)
     public void setServerState() {
+        model.serverStateChange(serverStateBtn.get());
+        System.out.println("serverStateBtn Noty");
+        getServerState();
+    }
 
-        if( serverStateBtn.get() == "Server OFF") {
-            serverStateBtn.set("Server On");
-            serverState.set("Ready");
-        }
-        else
-        {
-            serverStateBtn.set("Server OFF");
-            serverState.set("Servo On");
-        }
+    public void getServerState() {
+
+        serverState.set(model.getServerState());
+        serverStateBtn.set(model.getServerStateBtn());
+        System.out.println("View 적용");
     }
 }

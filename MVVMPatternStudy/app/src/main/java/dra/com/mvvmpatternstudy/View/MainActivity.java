@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setModel(model);
 
         model.onCreate();
+        System.out.println("View 생성");
     }
 
     @Override
@@ -41,18 +42,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
+       SharedInstance.getInstance().setServerState(serverVal); // TODO 노티만 //완료
 
-    public void serverStateChange(int serverVal) {
-        if (serverVal == 0) {
-            serverVal = 1;
-        }
-        else {
-            serverVal = 0;
-        }
+       //serverTv.setText(SharedInstance.getInstance().getServerStateText()); // TODO MVVM 적용해서 UI 갱신 되도록 // 완료
 
-        SharedInstance.getInstance().setServerState(serverVal); // TODO 노티만 //완료
-
-        //serverTv.setText(SharedInstance.getInstance().getServerStateText()); // TODO MVVM 적용해서 UI 갱신 되도록 // 완료
-    }
     */
 }
