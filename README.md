@@ -6,3 +6,4 @@ Architectural Pattern
 
 Design Pattern
   - Singleton
+  - Observer
