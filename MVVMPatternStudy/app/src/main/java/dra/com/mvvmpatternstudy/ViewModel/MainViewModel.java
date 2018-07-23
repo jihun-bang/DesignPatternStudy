@@ -10,8 +10,8 @@ public class MainViewModel implements BaseViewModel {
 
     //옵저버블 추가
     //serverState 는 텍스트 뷰 변수, serverStateBtn : 버튼 변수
-    public final ObservableField<String> serverState = new ObservableField<>();
-    public final ObservableField<String> serverStateBtn = new ObservableField<>();
+    //public final ObservableField<String> serverState = new ObservableField<>();
+    //public final ObservableField<String> serverStateBtn = new ObservableField<>();
 
     public MainViewModel() {
         //model = new SharedInstance();
@@ -21,8 +21,7 @@ public class MainViewModel implements BaseViewModel {
 
     @Override
     public void onCreate() {
-        serverStateBtn.set(model.getServerStateBtn());
-        serverState.set(model.getServerState());
+
     }
 
     @Override
@@ -43,16 +42,12 @@ public class MainViewModel implements BaseViewModel {
     // 이벤트 리스너 함수
     // 새로운 데이터를 전달 받아 갱신 및 알람
     // View UI 갱신 (MainActivity)
-    public void setServerState() {
-        model.serverStateChange(serverStateBtn.get());
-        System.out.println("serverStateBtn Noty");
-        getServerState();
+    public void setServerState(String str) {
+//        model.serverStateChange(serverStateBtn.get());
+//        System.out.println("serverStateBtn Noty");
+//        getServerState();
+
+        SharedInstance.getInstance().serverObservable.action(str);
     }
 
-    public void getServerState() {
-
-        serverState.set(model.getServerState());
-        serverStateBtn.set(model.getServerStateBtn());
-        System.out.println("View 적용");
-    }
 }

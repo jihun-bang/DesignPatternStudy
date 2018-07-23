@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data>
+
+<!--    <data>
         <variable
             name="model"
             type="dra.com.mvvmpatternstudy.ViewModel.MainViewModel"/>
-    </data>
+    </data>-->
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,15 +17,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.serverState}"
             tools:text="Ready"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="false"
-            android:text="@{model.serverStateBtn}"
-            android:onClick="@{() -> model.setServerState()}"
             tools:text="Server On"/>
+
+
     </LinearLayout>
 </layout>

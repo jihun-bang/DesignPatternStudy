@@ -3,6 +3,7 @@ package dra.com.mvvmpatternstudy.View;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
 import dra.com.mvvmpatternstudy.R;
 import dra.com.mvvmpatternstudy.ViewModel.MainViewModel;
@@ -15,12 +16,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.setModel(model);
+        //ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        //binding.setModel(model);
 
         model.onCreate();
         System.out.println("View 생성");
+
     }
 
     @Override
