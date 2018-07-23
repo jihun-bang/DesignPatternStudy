@@ -1,22 +1,14 @@
 package dra.com.mvvmpatternstudy.ViewModel;
 
-import android.databinding.ObservableField;
 
 import dra.com.mvvmpatternstudy.Model.SharedInstance;
+import dra.com.mvvmpatternstudy.View.TestActivity;
 
 public class MainViewModel implements BaseViewModel {
 
-    private SharedInstance model;
-
-    //옵저버블 추가
-    //serverState 는 텍스트 뷰 변수, serverStateBtn : 버튼 변수
-    //public final ObservableField<String> serverState = new ObservableField<>();
-    //public final ObservableField<String> serverStateBtn = new ObservableField<>();
-
     public MainViewModel() {
-        //model = new SharedInstance();
-        //싱글톤 적용
-        model = SharedInstance.getInstance();
+        //옵저버 추가
+        SharedInstance.getInstance().addObserver(SharedInstance.getInstance());
     }
 
     @Override
@@ -41,13 +33,14 @@ public class MainViewModel implements BaseViewModel {
 
     // 이벤트 리스너 함수
     // 새로운 데이터를 전달 받아 갱신 및 알람
-    // View UI 갱신 (MainActivity)
-    public void setServerState(String str) {
-//        model.serverStateChange(serverStateBtn.get());
-//        System.out.println("serverStateBtn Noty");
-//        getServerState();
+    // View UI 갱신 (TestActivity)
+    public void setServerState() {
 
-        SharedInstance.getInstance().serverObservable.action(str);
+        // 3. TestActivity(View) 에게서 데이터를 전달 받음
+        SharedInstance.getInstance().serverObservable.action("변경 감지");
+
+        // 5. SharedInstance 의 변경값을 TestActivity(View) 에게 View 갱신
+        TestActivity.editText.setText(SharedInstance.getInstance().getServerState());
     }
 
 }

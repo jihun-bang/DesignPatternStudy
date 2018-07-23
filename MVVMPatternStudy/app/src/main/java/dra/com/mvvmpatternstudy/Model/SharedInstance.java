@@ -1,5 +1,7 @@
 package dra.com.mvvmpatternstudy.Model;
 
+import android.util.Log;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,7 +12,6 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
 
     private String serverState;
 
-
     // Singleton
     private SharedInstance() {}
     private static class SharedInstanceHolder {
@@ -20,12 +21,16 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
         return SharedInstanceHolder.instance;
     }
 
+    // update 에서 받은 string 값으로 set
+    private void serverStateChange(String serverState) {
+        SharedInstanceHolder.instance.serverState = serverState;
+    }
+
     // Observables
     public static ServerObservable serverObservable = new ServerObservable();
 
-
-    private void serverStateChange(String serverState) {
-        SharedInstanceHolder.instance.serverState = serverState;
+    public void addObserver(Observer observer) {
+        serverObservable.addObserver(observer);
     }
 
     // 서버 상태값 반환
@@ -34,12 +39,14 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
         return SharedInstanceHolder.instance.serverState;
     }
 
-    // TODO 리스닝 함수 추가 // 완료
-
+    // 4. ViewModel 에서 등록한 옵저버블에서 알람 받음
+    @Override
     public void update(Observable o, Object arg) {
 
+        // 알람 받은 옵저버블이 무엇인지 체크
         if( o instanceof ServerObservable) {
-            this.serverStateChange("변경 감지");
+            this.serverStateChange("Server On");
+            Log.i("SharedInstance", o + " 에서 String : " + arg + "감지");
         }
     }
 }
