@@ -1,6 +1,8 @@
 package dra.com.mvvmpatternstudy.ViewModel;
 
 
+import dra.com.mvvmpatternstudy.Model.RobotState.RobotState;
+import dra.com.mvvmpatternstudy.Model.RobotState.RobotStateManager;
 import dra.com.mvvmpatternstudy.Model.SharedInstance;
 import dra.com.mvvmpatternstudy.View.TestActivity;
 
@@ -43,4 +45,13 @@ public class MainViewModel implements BaseViewModel {
         TestActivity.editText.setText(SharedInstance.getInstance().getServerState());
     }
 
+    public void setRobotState(String command) {
+
+
+        // 3. TestActivity(View) 에게서 데이터를 전달 받고 RobotStateManager 에 데이터 전달
+        TestActivity.robotStateManager.setRobotState(command);
+
+        // 5. RobotStateManager 의 변경값을 TestActivity(View) 에게 View 갱신
+        TestActivity.editText.setText(RobotStateManager.getInstance().getRobotState());
+    }
 }
