@@ -31,7 +31,7 @@ public class RobotStateManager {
         this.robotStateText = "Stop";
     }
 
-    // 4. ViewModel 에서 데이터 받은것 처리
+    // 4. ViewModel 에서 command 를 비교후에 메소드 수행.
     public void setRobotState(String command) {
         if(command == "play"){
             rPlay();

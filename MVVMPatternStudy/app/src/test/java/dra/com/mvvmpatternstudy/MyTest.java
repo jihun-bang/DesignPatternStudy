@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import dra.com.mvvmpatternstudy.Model.SharedInstance;
+import dra.com.mvvmpatternstudy.Model.Singleton.SharedInstance;
 
 @RunWith(JUnit4.class)
 public class MyTest {

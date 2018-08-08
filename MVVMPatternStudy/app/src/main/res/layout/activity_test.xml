@@ -48,5 +48,19 @@
             android:layout_below="@+id/btn_robotPause"
             android:enabled="false"
             android:text="정지" />
+
+        <Button
+            android:id="@+id/btn_packetSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_robotStop"
+            android:text="패킷 전송" />
+
+        <Button
+            android:id="@+id/btn_interpreter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_packetSend"
+            android:text="인터프리터" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

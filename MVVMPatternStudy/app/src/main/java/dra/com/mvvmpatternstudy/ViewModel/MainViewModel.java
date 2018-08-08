@@ -1,16 +1,23 @@
 package dra.com.mvvmpatternstudy.ViewModel;
 
+import android.util.Log;
 
-import dra.com.mvvmpatternstudy.Model.RobotState.RobotState;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.Context;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.ProgramNode;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.RootNode;
 import dra.com.mvvmpatternstudy.Model.RobotState.RobotStateManager;
-import dra.com.mvvmpatternstudy.Model.SharedInstance;
+import dra.com.mvvmpatternstudy.Model.Singleton.SharedInstance;
 import dra.com.mvvmpatternstudy.View.TestActivity;
 
 public class MainViewModel implements BaseViewModel {
 
+    RootNode rootNode = new ProgramNode();
+
     public MainViewModel() {
         //옵저버 추가
         SharedInstance.getInstance().addObserver(SharedInstance.getInstance());
+
     }
 
     @Override
@@ -46,7 +53,6 @@ public class MainViewModel implements BaseViewModel {
     }
 
     public void setRobotState(String command) {
-
 
         // 3. TestActivity(View) 에게서 데이터를 전달 받고 RobotStateManager 에 데이터 전달
         TestActivity.robotStateManager.setRobotState(command);

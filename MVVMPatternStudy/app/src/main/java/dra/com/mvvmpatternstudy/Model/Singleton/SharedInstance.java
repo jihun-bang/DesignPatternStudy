@@ -1,4 +1,4 @@
-package dra.com.mvvmpatternstudy.Model;
+package dra.com.mvvmpatternstudy.Model.Singleton;
 
 import android.util.Log;
 
