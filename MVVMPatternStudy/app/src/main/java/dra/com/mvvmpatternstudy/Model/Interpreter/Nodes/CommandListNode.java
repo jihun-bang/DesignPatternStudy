@@ -2,7 +2,7 @@ package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
 import java.util.Vector;
 
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.Context;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
 /*
@@ -18,22 +18,22 @@ public class CommandListNode extends RootNode {
     private RootNode commandListNode;
     private Vector list = new Vector();
 
-    public void parse(Context context) throws NodeParseException {
+    public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         while (true) {
-            if (context.currentToken() == null) {
+            if (interpreterContext.currentToken() == null) {
                 throw new NodeParseException("Missing 'end'");
-            } else if (context.currentToken().equals("end")) {
-                context.skipToken("end");
+            } else if (interpreterContext.currentToken().equals("end")) {
+                interpreterContext.skipToken("end");
                 break;
             } else {
                 RootNode commandNode = new CommandNode();
-                commandNode.parse(context);
+                commandNode.parse(interpreterContext);
                 list.add(commandNode);
             }
         }
     }
 
     public String toString() {
-        return "" + list;
+        return " " + list + " ";
     }
 }

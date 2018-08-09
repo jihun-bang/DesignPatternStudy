@@ -11,9 +11,12 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
     // TODO Observable로 만들어서. MVVM 적용 //완료
 
     private String serverState;
+    private int taskPostion = 1;
+    private int indentationCount = 0;
 
     // Singleton
     private SharedInstance() {}
+
     private static class SharedInstanceHolder {
         private static final SharedInstance instance = new SharedInstance();
     }
@@ -48,5 +51,22 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
             this.serverStateChange("Server On");
             Log.i("SharedInstance", o + " 에서 String : " + arg + "감지");
         }
+    }
+
+    // 현재 선택한 CommandListItem Postion + 1
+    public void setTaskPostion(int taskPostion) {
+        this.taskPostion = taskPostion;
+    }
+
+    public int getTaskPostion() {
+        return taskPostion;
+    }
+
+    public void setIndentationCount(int indentationCount) {
+        this.indentationCount = indentationCount;
+    }
+
+    public int getIndentationCount() {
+        return this.indentationCount;
     }
 }

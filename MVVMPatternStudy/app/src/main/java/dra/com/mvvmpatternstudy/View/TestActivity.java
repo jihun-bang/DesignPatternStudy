@@ -1,26 +1,21 @@
 package dra.com.mvvmpatternstudy.View;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.ProgramNode;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.RootNode;
 import dra.com.mvvmpatternstudy.Model.RobotState.RobotStateManager;
 import dra.com.mvvmpatternstudy.Model.RobotState.RobotStateStop;
 import dra.com.mvvmpatternstudy.R;
-import dra.com.mvvmpatternstudy.ViewModel.InterpreterViewModel;
 import dra.com.mvvmpatternstudy.ViewModel.MainViewModel;
 
 public class TestActivity extends AppCompatActivity implements Button.OnClickListener {
     public MainViewModel mainViewModel = new MainViewModel();
-    public InterpreterViewModel interpreterViewModel = new InterpreterViewModel();
 
     public static RobotStateManager robotStateManager = new RobotStateManager(new RobotStateStop());
-    public static RootNode rootNode = new ProgramNode();
 
     public static Button btnTest, btnPacketSend;
     public static Button btnRobotPlay, btnRobotStop, btnRobotPause, btnInterpreter;
@@ -82,4 +77,5 @@ public class TestActivity extends AppCompatActivity implements Button.OnClickLis
                 break;
         }
     }
+
 }

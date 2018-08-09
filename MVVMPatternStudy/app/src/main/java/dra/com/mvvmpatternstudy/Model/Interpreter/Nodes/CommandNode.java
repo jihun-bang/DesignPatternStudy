@@ -1,6 +1,6 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.Context;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
 /*
@@ -14,13 +14,13 @@ public class CommandNode extends RootNode {
 
     private RootNode node;
 
-    public void parse(Context context) throws NodeParseException {
-        if (context.currentToken().equals("repeat")) {
+    public void parse(InterpreterContext interpreterContext) throws NodeParseException {
+        if (interpreterContext.currentToken().equals("repeat")) {
             node = new RepeatCommandNode();
-            node.parse(context);
+            node.parse(interpreterContext);
         } else {
             node = new PrimitiveCommandNode();
-            node.parse(context);
+            node.parse(interpreterContext);
         }
     }
     public String toString() {

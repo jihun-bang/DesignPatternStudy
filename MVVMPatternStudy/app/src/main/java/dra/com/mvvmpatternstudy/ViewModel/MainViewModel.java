@@ -1,23 +1,14 @@
 package dra.com.mvvmpatternstudy.ViewModel;
 
-import android.util.Log;
-
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.Context;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.ProgramNode;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.RootNode;
 import dra.com.mvvmpatternstudy.Model.RobotState.RobotStateManager;
 import dra.com.mvvmpatternstudy.Model.Singleton.SharedInstance;
 import dra.com.mvvmpatternstudy.View.TestActivity;
 
 public class MainViewModel implements BaseViewModel {
 
-    RootNode rootNode = new ProgramNode();
-
     public MainViewModel() {
         //옵저버 추가
         SharedInstance.getInstance().addObserver(SharedInstance.getInstance());
-
     }
 
     @Override

@@ -1,6 +1,6 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.Context;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
 /*
@@ -14,15 +14,15 @@ public class RepeatCommandNode extends RootNode {
     private int number;
 
     // 재귀
-    public void parse(Context context) throws NodeParseException {
-        context.skipToken("repeat");
-        number = context.currentNumber();
-        context.nextToken();
+    public void parse(InterpreterContext interpreterContext) throws NodeParseException {
+        interpreterContext.skipToken("repeat");
+        number = interpreterContext.currentNumber();
+        interpreterContext.nextToken();
         commandListNode = new CommandListNode();
-        commandListNode.parse(context);
+        commandListNode.parse(interpreterContext);
     }
 
     public String toString() {
-        return "[repeat" + number + commandListNode + "]";
+        return " [ repeat " + number + commandListNode + " ] ";
     }
 }

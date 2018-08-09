@@ -11,11 +11,11 @@ import java.util.StringTokenizer;
   구분 문자 : 스페이스(' ') / 탭('\t'), 뉴라인('\n'), 캐리지 리턴('\r'), 폼피드('\f')
  */
 
-public class Context{
+public class InterpreterContext {
     private StringTokenizer tokenizer; // 토큰 분할
     private String currentToken; // 현재 토큰
 
-    public Context(String text) {
+    public InterpreterContext(String text) {
         tokenizer = new StringTokenizer(text);
         nextToken();
     }

@@ -1,6 +1,6 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.Context;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
 /*
@@ -12,10 +12,10 @@ public class PrimitiveCommandNode extends RootNode {
 
     private String name;
 
-    public void parse(Context context) throws NodeParseException {
+    public void parse(InterpreterContext interpreterContext) throws NodeParseException {
 
-        name = context.currentToken();
-        context.skipToken(name);
+        name = interpreterContext.currentToken();
+        interpreterContext.skipToken(name);
 
         // 기능 command 외 예외처리
         if (!name.equals("go") && !name.equals("right") && !name.equals("left")) {
