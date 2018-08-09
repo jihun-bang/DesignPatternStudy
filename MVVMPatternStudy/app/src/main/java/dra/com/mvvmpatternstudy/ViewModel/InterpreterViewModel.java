@@ -100,6 +100,7 @@ public class InterpreterViewModel implements BaseViewModel {
         setInterpreter();
     }
 
+    //TODO 테스트케이스 기반으로
     public void setInterpreter() {
 
         String fullTxt = "";

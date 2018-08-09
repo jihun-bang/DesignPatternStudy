@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 public class InterpreterContext {
     private StringTokenizer tokenizer; // 토큰 분할
     private String currentToken; // 현재 토큰
+    //todo share -> context inden
 
     public InterpreterContext(String text) {
         tokenizer = new StringTokenizer(text);

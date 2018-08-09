@@ -44,15 +44,21 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         String indentation = "";
-        for (int i = 0; i < SharedInstance.getInstance().getIndentationCount(); i++)
-        {
-            indentation = indentation + "   ";
-        }
-        holder.commandView.setText(indentation + items.get(position).getCommand());
+        String command = items.get(position).getCommand();
+        int indentationCnt = SharedInstance.getInstance().getIndentationCount();
 
-        if( items.get(position).getCommand().equals("repeat")) {
+        for (int i = 0; i < indentationCnt; i++)
+        {
+            indentation = indentation + "       ";
+        }
+        holder.commandView.setText(indentation + command);
+
+        if( command.equals("repeat")) {
             holder.countView.setText(Integer.toString(items.get(position).getRepeatCount()));
-            SharedInstance.getInstance().setIndentationCount(SharedInstance.getInstance().getIndentationCount()+1);
+            SharedInstance.getInstance().setIndentationCount(indentationCnt + 1);
+        }
+        else if( command.equals("end")) {
+            SharedInstance.getInstance().setIndentationCount(0);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
