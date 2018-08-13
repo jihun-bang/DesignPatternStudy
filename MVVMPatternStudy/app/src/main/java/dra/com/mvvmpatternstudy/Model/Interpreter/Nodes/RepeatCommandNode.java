@@ -11,15 +11,27 @@ import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 public class RepeatCommandNode extends RootNode {
 
     private RootNode commandListNode;
+    private int index;
     private int number;
+    private int indentation;
 
     // 재귀
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         interpreterContext.skipToken("repeat");
+
         number = interpreterContext.currentNumber();
         interpreterContext.nextToken();
-        commandListNode = new CommandListNode();
+
+        commandListNode = new CommandListNode(index, indentation ++);
         commandListNode.parse(interpreterContext);
+    }
+
+    RepeatCommandNode (int index, int indentation) {
+        this.indentation = indentation;
+    }
+
+    public void setCommandListItem() {
+
     }
 
     public String toString() {

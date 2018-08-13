@@ -14,6 +14,8 @@ import java.util.StringTokenizer;
 public class InterpreterContext {
     private StringTokenizer tokenizer; // 토큰 분할
     private String currentToken; // 현재 토큰
+    private int indentationLevel = 0; // 토큰 들여쓰기
+
     //todo share -> context inden
 
     public InterpreterContext(String text) {
@@ -41,9 +43,11 @@ public class InterpreterContext {
     public void skipToken(String token) throws NodeParseException {
         if (!token.equals(currentToken)) {
             throw new NodeParseException("Warning : " + token + "is expected But \n Current Token : " + currentToken );
+
         }
         nextToken();
     }
+
 
     // 현재 토큰을 정수 수치로
     public int currentNumber() throws NodeParseException {
@@ -55,4 +59,6 @@ public class InterpreterContext {
         }
         return number;
     }
+
+
 }

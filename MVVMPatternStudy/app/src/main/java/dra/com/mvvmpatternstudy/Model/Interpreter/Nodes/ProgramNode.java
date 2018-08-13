@@ -17,9 +17,11 @@ public class ProgramNode extends RootNode {
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         interpreterContext.skipToken("program");
-        commandListNode = new CommandListNode();
+        commandListNode = new CommandListNode(0, 0);
         commandListNode.parse(interpreterContext);
     }
+
+    public void setCommandListItem() {}
 
     public String toString() {
         return "[program " + commandListNode + " ] ";

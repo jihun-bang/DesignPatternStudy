@@ -9,9 +9,11 @@ public class IfCommandNode extends RootNode {
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         interpreterContext.skipToken("if");
-        commandListNode = new CommandListNode();
+        commandListNode = new CommandListNode(1,1);
         commandListNode.parse(interpreterContext);
     }
+
+    public void setCommandListItem () {}
 
     public String toString() {
         return "[program" + commandListNode + "]";

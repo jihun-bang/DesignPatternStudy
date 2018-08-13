@@ -15,22 +15,34 @@ import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
 public class CommandListNode extends RootNode {
 
-    private RootNode commandListNode;
     private Vector list = new Vector();
+    private int indentation;
+    private int index;
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         while (true) {
             if (interpreterContext.currentToken() == null) {
+
                 throw new NodeParseException("Missing 'end'");
-            } else if (interpreterContext.currentToken().equals("end")) {
+            }
+            else if (interpreterContext.currentToken().equals("end")) {
                 interpreterContext.skipToken("end");
                 break;
-            } else {
-                RootNode commandNode = new CommandNode();
+            }
+            else {
+                RootNode commandNode = new CommandNode(index++, indentation);
                 commandNode.parse(interpreterContext);
                 list.add(commandNode);
+
             }
         }
+    }
+
+    public void setCommandListItem() {}
+
+    CommandListNode (int index, int indentation) {
+        this.index = index;
+        this.indentation = indentation;
     }
 
     public String toString() {

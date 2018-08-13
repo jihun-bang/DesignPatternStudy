@@ -11,6 +11,8 @@ import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 public class PrimitiveCommandNode extends RootNode {
 
     private String name;
+    private int indentation;
+    private int index;
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
 
@@ -22,6 +24,14 @@ public class PrimitiveCommandNode extends RootNode {
             throw new NodeParseException(name + " is undefined");
         }
     }
+
+    public void setCommandListItem() {}
+
+    PrimitiveCommandNode(int index, int indentation) {
+        this.indentation = indentation;
+        this.index = index;
+    }
+
     public String toString() {
         return name;
     }

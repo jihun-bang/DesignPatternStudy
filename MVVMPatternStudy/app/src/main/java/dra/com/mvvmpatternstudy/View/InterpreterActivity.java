@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import dra.com.mvvmpatternstudy.Model.Adpater.CommandListAdapter;
-import dra.com.mvvmpatternstudy.Model.Adpater.CommandListItem;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListAdapter;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListItem;
 import dra.com.mvvmpatternstudy.R;
 import dra.com.mvvmpatternstudy.ViewModel.InterpreterViewModel;
 
@@ -29,7 +29,7 @@ public class InterpreterActivity extends AppCompatActivity implements Button.OnC
     public static EditText editInterpreterText, editRepeatCount;
     public static TextView textInterpreterResult;
 
-    private int repeatCount;
+    private String repeatCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class InterpreterActivity extends AppCompatActivity implements Button.OnC
                 break;
 
             case R.id.btn_interpreter_repeat :
-                repeatCount = Integer.parseInt(editRepeatCount.getText().toString());
+                repeatCount = editRepeatCount.getText().toString();
                 interpreterViewModel.setLogicCommandData("repeat", repeatCount);
                 break;
         }
@@ -89,5 +89,9 @@ public class InterpreterActivity extends AppCompatActivity implements Button.OnC
 
     public RecyclerView getRecyclerView() {
         return this.mRecyclerView;
+    }
+
+    public InterpreterViewModel getInterpreterViewModel() {
+        return interpreterViewModel;
     }
 }

@@ -12,7 +12,6 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
 
     private String serverState;
     private int taskPostion = 1;
-    private int indentationCount = 0;
 
     // Singleton
     private SharedInstance() {}
@@ -62,11 +61,4 @@ public class SharedInstance implements Observer{         // TODO 서버를 옵�
         return taskPostion;
     }
 
-    public void setIndentationCount(int indentationCount) {
-        this.indentationCount = indentationCount;
-    }
-
-    public int getIndentationCount() {
-        return this.indentationCount;
-    }
 }

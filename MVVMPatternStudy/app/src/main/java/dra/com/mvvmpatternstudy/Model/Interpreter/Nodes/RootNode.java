@@ -1,5 +1,8 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
+import java.util.ArrayList;
+
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListItem;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
@@ -11,5 +14,7 @@ import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 */
 
 public abstract class RootNode {
+    private ArrayList<CommandListItem> commandListItems;
     public abstract void parse(InterpreterContext interpreterContext) throws NodeParseException;
+    public abstract void setCommandListItem();
 }

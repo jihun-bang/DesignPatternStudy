@@ -1,10 +1,11 @@
-package dra.com.mvvmpatternstudy.Model.Adpater;
+package dra.com.mvvmpatternstudy.Model.Interpreter.Adpater;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,23 +44,15 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        String indentation = "";
+        String indentationText = "";
         String command = items.get(position).getCommand();
-        int indentationCnt = SharedInstance.getInstance().getIndentationCount();
+        int indentationLevel = items.get(position).getIndentationLevel();
 
-        for (int i = 0; i < indentationCnt; i++)
-        {
-            indentation = indentation + "       ";
+        for (int i = 0; i < indentationLevel; i++) {
+            indentationText = indentationText + "       ";
         }
-        holder.commandView.setText(indentation + command);
 
-        if( command.equals("repeat")) {
-            holder.countView.setText(Integer.toString(items.get(position).getRepeatCount()));
-            SharedInstance.getInstance().setIndentationCount(indentationCnt + 1);
-        }
-        else if( command.equals("end")) {
-            SharedInstance.getInstance().setIndentationCount(0);
-        }
+        holder.commandView.setText(indentationText + command);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +60,7 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
             {
                 SharedInstance.getInstance().setTaskPostion(position+1);
              //   InterpreterActivity.editInterpreterText.setSelection();
-                //Toast.makeText(getApplicationContext(), items.get(position).getCommand(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext().getApplicationContext(), "Command Index : " + position +" Command Name : " +items.get(position).getCommand(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -58,20 +58,19 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left">
-            <Button
-                android:id="@+id/btn_interpreter_end"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:text="End" />
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/edit_repeatCnt"
                 android:layout_width="96dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:text="1" />
+
+            <Button
+                android:id="@+id/btn_interpreter_confirm"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Confirm" />
         </FrameLayout>
 
     </LinearLayout>

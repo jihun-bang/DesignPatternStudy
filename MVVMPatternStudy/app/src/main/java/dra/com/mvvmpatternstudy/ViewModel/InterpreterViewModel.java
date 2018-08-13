@@ -1,17 +1,19 @@
 package dra.com.mvvmpatternstudy.ViewModel;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 
-import dra.com.mvvmpatternstudy.Model.Adpater.CommandListAdapter;
-import dra.com.mvvmpatternstudy.Model.Adpater.CommandListItem;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListAdapter;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListItem;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.ProgramNode;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.RootNode;
 import dra.com.mvvmpatternstudy.Model.Singleton.SharedInstance;
 import dra.com.mvvmpatternstudy.View.InterpreterActivity;
+import dra.com.mvvmpatternstudy.View.PopupActivity;
 
 public class InterpreterViewModel implements BaseViewModel {
 
@@ -28,10 +30,7 @@ public class InterpreterViewModel implements BaseViewModel {
         commandListItems.add(new CommandListItem("program"));
         commandListItems.add(new CommandListItem("end"));
 
-        ((InterpreterActivity) mContext).getRecyclerView().setLayoutManager(((InterpreterActivity) mContext).getLayoutManager());
-        // 어댑터에 추가 후 InterpreterActivity 의 RecyclerView 갱신
-        mAdapter = new CommandListAdapter(commandListItems);
-        ((InterpreterActivity) mContext).getRecyclerView().setAdapter(mAdapter);
+        refreshView();
     }
 
     @Override
@@ -64,6 +63,11 @@ public class InterpreterViewModel implements BaseViewModel {
             rootNode.parse(new InterpreterContext(fullTxt));
         } catch (NodeParseException e) {
             e.printStackTrace();
+
+            Intent intent = new Intent(mContext, PopupActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("errorToken", fullTxt);
+            mContext.getApplicationContext().startActivity(intent);
         }
 
         // 5. rootNode 의 변경값을 TestActivity(View) 에게 View 갱신
@@ -74,28 +78,27 @@ public class InterpreterViewModel implements BaseViewModel {
     public void setCommandData(String command) {
         // CommandList 아이템 추가
         commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(command));
+
         // CommandListItems 포지션 1 증가
         SharedInstance.getInstance().setTaskPostion(SharedInstance.getInstance().getTaskPostion() + 1);
 
         // 어댑터에 추가 후 InterpreterActivity 의 RecyclerView 갱신
-        ((InterpreterActivity) mContext).getRecyclerView().setLayoutManager(((InterpreterActivity) mContext).getLayoutManager());
-        mAdapter = new CommandListAdapter(commandListItems);
-        ((InterpreterActivity) mContext).getRecyclerView().setAdapter(mAdapter);
+        refreshView();
 
         setInterpreter();
     }
 
-    public void setLogicCommandData(String command, int repeatCount) {
+    public void setLogicCommandData(String command, String repeatCount) {
         // CommandList 아이템 추가
-        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(command, repeatCount));
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(command));
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(repeatCount));
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion() + 2, new CommandListItem("end"));
+
         // CommandListItems 포지션 1 증가
-        commandListItems.add(SharedInstance.getInstance().getTaskPostion()+1, new CommandListItem("end"));
         SharedInstance.getInstance().setTaskPostion(SharedInstance.getInstance().getTaskPostion() + 1);
 
         // 어댑터에 추가 후 InterpreterActivity 의 RecyclerView 갱신
-        ((InterpreterActivity) mContext).getRecyclerView().setLayoutManager(((InterpreterActivity) mContext).getLayoutManager());
-        mAdapter = new CommandListAdapter(commandListItems);
-        ((InterpreterActivity) mContext).getRecyclerView().setAdapter(mAdapter);
+        refreshView();
 
         setInterpreter();
     }
@@ -107,10 +110,7 @@ public class InterpreterViewModel implements BaseViewModel {
         int commandListItemsLength = commandListItems.size();
         for( int i = 0; i < commandListItemsLength; i++ ) {
             fullTxt = fullTxt + " " + commandListItems.get(i).getCommand();
-            // 추가할 포지션의 커맨드가 repeat 일 경우 그 다음 count 추가
-            if(commandListItems.get(i).getCommand().equals("repeat")) {
-                fullTxt = fullTxt + " " + commandListItems.get(i).getRepeatCount();
-            }
+
             InterpreterActivity.editInterpreterText.setText(fullTxt);
         }
 
@@ -139,4 +139,19 @@ public class InterpreterViewModel implements BaseViewModel {
 //        }
         parseInterpreter();
     }
+
+    // RecyclerView 갱신
+    public void refreshView() {
+        ((InterpreterActivity) mContext).getRecyclerView().setLayoutManager(((InterpreterActivity) mContext).getLayoutManager());
+        mAdapter = new CommandListAdapter(commandListItems);
+        ((InterpreterActivity) mContext).getRecyclerView().setAdapter(mAdapter);
+    }
+
+    public ArrayList getArrayList() {
+        return this.commandListItems;
+    }
+
+//    public void setCommandListItem(int index, int indentationLevel) {
+//        commandListItems.get(index).getIndentationLevel() = indentationLevel;
+//    }
 }
