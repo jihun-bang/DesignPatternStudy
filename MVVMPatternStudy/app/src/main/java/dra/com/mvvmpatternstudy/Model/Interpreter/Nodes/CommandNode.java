@@ -14,23 +14,20 @@ public class CommandNode extends RootNode {
 
     private RootNode node;
     private int indentation;
-    private int index;
-
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
 
         if (interpreterContext.currentToken().equals("repeat")) {
-            node = new RepeatCommandNode(index, indentation++);
+            node = new RepeatCommandNode(indentation + 1);
             node.parse(interpreterContext);
         } else {
-            node = new PrimitiveCommandNode(index, indentation);
+            node = new PrimitiveCommandNode(indentation);
             node.parse(interpreterContext);
         }
     }
 
     public void setCommandListItem() {}
 
-    CommandNode (int index, int indentation) {
-        this.index = index;
+    CommandNode (int indentation) {
         this.indentation = indentation;
     }
 

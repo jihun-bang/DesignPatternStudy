@@ -1,5 +1,6 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandInstance;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
@@ -12,11 +13,11 @@ public class PrimitiveCommandNode extends RootNode {
 
     private String name;
     private int indentation;
-    private int index;
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
 
         name = interpreterContext.currentToken();
+        setCommandListItem();
         interpreterContext.skipToken(name);
 
         // 기능 command 외 예외처리
@@ -25,11 +26,12 @@ public class PrimitiveCommandNode extends RootNode {
         }
     }
 
-    public void setCommandListItem() {}
+    public void setCommandListItem() {
+        CommandInstance.getInstance().add(name, indentation);
+    }
 
-    PrimitiveCommandNode(int index, int indentation) {
+    PrimitiveCommandNode(int indentation) {
         this.indentation = indentation;
-        this.index = index;
     }
 
     public String toString() {

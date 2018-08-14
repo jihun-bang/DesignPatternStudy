@@ -1,34 +1,28 @@
 package dra.com.mvvmpatternstudy.ViewModel;
 
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListAdapter;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandListItem;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.ProgramNode;
-import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.RootNode;
 import dra.com.mvvmpatternstudy.Model.Singleton.SharedInstance;
 import dra.com.mvvmpatternstudy.View.InterpreterActivity;
-import dra.com.mvvmpatternstudy.View.PopupActivity;
 
 public class InterpreterViewModel implements BaseViewModel {
 
-    RootNode rootNode = new ProgramNode();
-
     Context mContext;
     private CommandListAdapter mAdapter;
-    private ArrayList<CommandListItem> commandListItems;
+    public static ArrayList<String> commandListItems;
+
+    String fullTxt = "";
 
     public InterpreterViewModel(Context context) {
         mContext = context;
         commandListItems = new ArrayList<>();
 
-        commandListItems.add(new CommandListItem("program"));
-        commandListItems.add(new CommandListItem("end"));
+        commandListItems.add(("program"));
+        commandListItems.add(("end"));
 
         refreshView();
     }
@@ -53,31 +47,9 @@ public class InterpreterViewModel implements BaseViewModel {
 
     }
 
-    public void parseInterpreter() {
-
-        // 현재 텍스트
-        String fullTxt = InterpreterActivity.editInterpreterText.getText().toString();
-
-        // 3. TestActivity(View) 에게서 데이터를 전달 받고 Interpreter - node 에 데이터 전달
-        try {
-            rootNode.parse(new InterpreterContext(fullTxt));
-        } catch (NodeParseException e) {
-            e.printStackTrace();
-
-            Intent intent = new Intent(mContext, PopupActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("errorToken", fullTxt);
-            mContext.getApplicationContext().startActivity(intent);
-        }
-
-        // 5. rootNode 의 변경값을 TestActivity(View) 에게 View 갱신
-        InterpreterActivity.textInterpreterResult.setText(rootNode.toString());
-
-    }
-
     public void setCommandData(String command) {
         // CommandList 아이템 추가
-        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(command));
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), command);
 
         // CommandListItems 포지션 1 증가
         SharedInstance.getInstance().setTaskPostion(SharedInstance.getInstance().getTaskPostion() + 1);
@@ -90,9 +62,9 @@ public class InterpreterViewModel implements BaseViewModel {
 
     public void setLogicCommandData(String command, String repeatCount) {
         // CommandList 아이템 추가
-        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(command));
-        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), new CommandListItem(repeatCount));
-        commandListItems.add(SharedInstance.getInstance().getTaskPostion() + 2, new CommandListItem("end"));
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion(), command);
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion() + 1, repeatCount);
+        commandListItems.add(SharedInstance.getInstance().getTaskPostion() + 2, "end");
 
         // CommandListItems 포지션 1 증가
         SharedInstance.getInstance().setTaskPostion(SharedInstance.getInstance().getTaskPostion() + 1);
@@ -105,14 +77,17 @@ public class InterpreterViewModel implements BaseViewModel {
 
     //TODO 테스트케이스 기반으로
     public void setInterpreter() {
+        fullTxt = "";
 
-        String fullTxt = "";
-        int commandListItemsLength = commandListItems.size();
-        for( int i = 0; i < commandListItemsLength; i++ ) {
-            fullTxt = fullTxt + " " + commandListItems.get(i).getCommand();
+        for( int i = 0; i < commandListItems.size(); i++ ) {
+            fullTxt = fullTxt + " " + commandListItems.get(i);
 
-            InterpreterActivity.editInterpreterText.setText(fullTxt);
+            //InterpreterActivity.editInterpreterText.setText(fullTxt);
         }
+
+        Log.i("setInterpreter : ", fullTxt);
+
+        //parseInterpreter(fullTxt);
 
 //        // 커서의 현재 위치
 //        int pos = InterpreterActivity.editInterpreterText.getSelectionStart();
@@ -137,19 +112,18 @@ public class InterpreterViewModel implements BaseViewModel {
 //                InterpreterActivity.editInterpreterText.setSelection(pos + command.length());
 //            }
 //        }
-        parseInterpreter();
     }
+
 
     // RecyclerView 갱신
     public void refreshView() {
+        setInterpreter();
+        //parseInterpreter(fullTxt);
         ((InterpreterActivity) mContext).getRecyclerView().setLayoutManager(((InterpreterActivity) mContext).getLayoutManager());
         mAdapter = new CommandListAdapter(commandListItems);
         ((InterpreterActivity) mContext).getRecyclerView().setAdapter(mAdapter);
     }
 
-    public ArrayList getArrayList() {
-        return this.commandListItems;
-    }
 
 //    public void setCommandListItem(int index, int indentationLevel) {
 //        commandListItems.get(index).getIndentationLevel() = indentationLevel;

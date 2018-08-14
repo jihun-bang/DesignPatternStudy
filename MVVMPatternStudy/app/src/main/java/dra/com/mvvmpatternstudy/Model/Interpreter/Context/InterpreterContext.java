@@ -61,4 +61,11 @@ public class InterpreterContext {
     }
 
 
+    public void increaseIndent() {
+        indentationLevel++;
+    }
+
+    public int currentIndentation() {
+        return indentationLevel;
+    }
 }

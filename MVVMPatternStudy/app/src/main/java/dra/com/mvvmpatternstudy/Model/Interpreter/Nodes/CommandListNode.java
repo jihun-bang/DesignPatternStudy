@@ -1,7 +1,9 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Nodes;
 
+import java.util.List;
 import java.util.Vector;
 
+import dra.com.mvvmpatternstudy.Model.Interpreter.Adpater.CommandInstance;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
 import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
 
@@ -17,7 +19,6 @@ public class CommandListNode extends RootNode {
 
     private Vector list = new Vector();
     private int indentation;
-    private int index;
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         while (true) {
@@ -26,11 +27,12 @@ public class CommandListNode extends RootNode {
                 throw new NodeParseException("Missing 'end'");
             }
             else if (interpreterContext.currentToken().equals("end")) {
+                setCommandListItem();
                 interpreterContext.skipToken("end");
                 break;
             }
             else {
-                RootNode commandNode = new CommandNode(index++, indentation);
+                RootNode commandNode = new CommandNode(indentation);
                 commandNode.parse(interpreterContext);
                 list.add(commandNode);
 
@@ -38,14 +40,21 @@ public class CommandListNode extends RootNode {
         }
     }
 
-    public void setCommandListItem() {}
+    public void setCommandListItem() {
+        CommandInstance.getInstance().add("end", indentation);
+        //index ++;
+        //indentation --;
+    }
 
-    CommandListNode (int index, int indentation) {
-        this.index = index;
+    CommandListNode (int indentation) {
         this.indentation = indentation;
     }
 
     public String toString() {
         return " " + list + " ";
+    }
+
+    public List toSList() {
+        return list;
     }
 }

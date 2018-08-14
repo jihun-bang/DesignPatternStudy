@@ -9,12 +9,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Context.NodeParseException;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.ProgramNode;
+import dra.com.mvvmpatternstudy.Model.Interpreter.Nodes.RootNode;
 import dra.com.mvvmpatternstudy.Model.Singleton.SharedInstance;
 import dra.com.mvvmpatternstudy.R;
 
 public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.ViewHolder> {
-
-    ArrayList<CommandListItem> items;
+    RootNode rootNode = new ProgramNode();
+    ArrayList<String> items;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView commandView;
@@ -28,7 +32,7 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
         }
     }
 
-    public CommandListAdapter(ArrayList<CommandListItem> items) {
+    public CommandListAdapter(ArrayList<String> items) {
         this.items = items;
     }
 
@@ -45,8 +49,16 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         String indentationText = "";
-        String command = items.get(position).getCommand();
-        int indentationLevel = items.get(position).getIndentationLevel();
+        String commadResult = "";
+
+        for(int j = 0; j < getItemCount(); j++) {
+            commadResult = commadResult + " " + items.get(j);
+        }
+
+        parseInterpreter(commadResult);
+
+        String command = items.get(position);
+        int indentationLevel = CommandInstance.getInstance().getCommandListItemIndentation(position);
 
         for (int i = 0; i < indentationLevel; i++) {
             indentationText = indentationText + "       ";
@@ -60,7 +72,7 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
             {
                 SharedInstance.getInstance().setTaskPostion(position+1);
              //   InterpreterActivity.editInterpreterText.setSelection();
-                Toast.makeText(v.getContext().getApplicationContext(), "Command Index : " + position +" Command Name : " +items.get(position).getCommand(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext().getApplicationContext(), "Command Index : " + position +" Command Name : " +items.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -69,5 +81,24 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
     public int getItemCount() {
 
         return (items == null) ? 0 : items.size();
+    }
+
+    public void parseInterpreter(String fullTxt) {
+
+        // 3. TestActivity(View) 에게서 데이터를 전달 받고 Interpreter - node 에 데이터 전달
+        try {
+            rootNode.parse(new InterpreterContext(fullTxt));
+        } catch (NodeParseException e) {
+            e.printStackTrace();
+
+//            Intent intent = new Intent(mContext, PopupActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.putExtra("errorToken", fullTxt);
+//            mContext.getApplicationContext().startActivity(intent);
+    }
+
+        // 5. rootNode 의 변경값을 TestActivity(View) 에게 View 갱신
+        //InterpreterActivity.textInterpreterResult.setText(rootNode.toString());
+
     }
 }

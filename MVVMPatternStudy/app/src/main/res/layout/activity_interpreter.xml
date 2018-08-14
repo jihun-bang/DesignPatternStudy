@@ -15,7 +15,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/re_InterpreterResult"
-        android:layout_width="1033dp"
+        android:layout_width="500dp"
         android:layout_height="555dp"
         android:background="@drawable/shape"
         android:padding="10dp"

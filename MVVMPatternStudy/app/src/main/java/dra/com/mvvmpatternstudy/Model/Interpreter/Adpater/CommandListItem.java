@@ -1,33 +1,31 @@
 package dra.com.mvvmpatternstudy.Model.Interpreter.Adpater;
 
-import dra.com.mvvmpatternstudy.Model.Interpreter.Context.InterpreterContext;
-
 public class CommandListItem {
     private String command;
+    private int indentationLevel;
 
-    public CommandListItem(String command) {
+    public CommandListItem (String command) {
         this.command = command;
     }
 
+    public CommandListItem (String command, int indentationLevel) {
+        this.command = command;
+        this.indentationLevel = indentationLevel;
+    }
+
     public String getCommand() {
-        return this.command;
+        return command;
     }
 
-    // Singleton
-    private CommandListItem() {}
-
-    private static class InterpreterContextInstanceHolder {
-        private static final InterpreterContext instance = new InterpreterContext();
-    }
-    public static InterpreterContext getInstance() {
-        return InterpreterContextInstanceHolder.instance;
+    public int getIndentationLevel() {
+        return indentationLevel;
     }
 
-//    public void setIndentationLevel(int indentationLevel) {
-//        this.indentationLevel = indentationLevel;
-//    }
-//
-//    public int getIndentationLevel() {
-//        return this.indentationLevel;
-//    }
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public void setIndentationLevel(int indentationLevel) {
+        this.indentationLevel = indentationLevel;
+    }
 }

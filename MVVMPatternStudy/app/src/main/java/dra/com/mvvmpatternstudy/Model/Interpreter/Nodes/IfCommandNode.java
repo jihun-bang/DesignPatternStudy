@@ -9,7 +9,7 @@ public class IfCommandNode extends RootNode {
 
     public void parse(InterpreterContext interpreterContext) throws NodeParseException {
         interpreterContext.skipToken("if");
-        commandListNode = new CommandListNode(1,1);
+        commandListNode = new CommandListNode(1);
         commandListNode.parse(interpreterContext);
     }
 
